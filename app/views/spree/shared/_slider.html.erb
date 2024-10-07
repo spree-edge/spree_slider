@@ -4,6 +4,7 @@
   <% cid ||= Random.rand(1000) %>
 
   <div id="carousel-slider-<%= cid %>" class="carousel slide" data-ride="carousel" <%= (defined? interval) != nil ? "data-interval=#{interval.to_s}" : "" %>>
+
     <%# Indicators %>
     <ol class="carousel-indicators">
       <% slider.each_with_index do |slide, index| %>
@@ -12,32 +13,33 @@
     </ol>
 
     <%# Wrapper for slider %>
-    <div class="carousel-inner" style="height: 578px;">
+    <div class="carousel-inner">
       <% slider.each_with_index do |slide, index| %>
-        <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 578px;">
-          <% image_url = slide.slide_image ?  main_app.url_for(slide.slide_image) : "noimage/large"%>
-          <%= link_to image_tag(image_url, alt: slide.name, class: 'd-block w-100', style: 'height: 578px; object-fit: cover;'), url_for(slide&.link_url) %>
+        <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+          <% image_url = slide.slide_image ? main_app.url_for(slide.slide_image) : "noimage/large" %>
+          <%= link_to image_tag(image_url, alt: slide.name, style: 'height: auto;'), url_for(slide&.link_url) %>
           <div class="carousel-caption">
-            <button class="btn btn-secondary"><%= slide.name %></button>
+            <h3><%= slide.name %></h3>
             <% unless slide.body.blank? %>
-              <p><%= slide.body %>
-                <p>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
+              <p><%= slide.body %></p>
+            <% end %>
+          </div>
         </div>
-
-        <%# Controls %>
-        <% if slider.size > 1 %>
-          <a class="carousel-control-prev" href="#carousel-slider-<%= cid %>" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only"><%= t(:previous) %></span>
-          </a>
-          <a class="carousel-control-next" href="#carousel-slider-<%= cid %>" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only"><%= t(:next) %></span>
-          </a>
-        <% end %>
+      <% end %>
     </div>
+
+    <%# Controls %>
+    <% if slider.size > 1 %>
+      <a class="carousel-control-prev" href="#carousel-slider-<%= cid %>" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only"><%= t(:previous) %></span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-slider-<%= cid %>" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only"><%= t(:next) %></span>
+      </a>
+    <% end %>
+
+  </div>
+
 <% end %>
