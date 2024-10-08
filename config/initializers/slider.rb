@@ -7,6 +7,7 @@ Rails.application.config.after_initialize do
         ::Spree::Core::Engine.routes.url_helpers.admin_slide_locations_path
       )
       .with_manage_ability_check(::Spree::SlideLocation)
+      .with_match_path('/slide_locations')
       .build
     )
 
@@ -17,6 +18,7 @@ Rails.application.config.after_initialize do
         ::Spree::Core::Engine.routes.url_helpers.admin_slides_path
       )
       .with_manage_ability_check(::Spree::Slide)
+      .with_match_path('/slides')
       .build
     )
   end
