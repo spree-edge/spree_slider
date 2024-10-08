@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   spree_version = '>= 3.7.0', '< 5.0'
-  s.add_dependency 'active_storage_validations', '~> 1.1.0'
+  s.add_dependency 'active_storage_validations', '~> 1.2.0'
   s.add_dependency 'spree_backend', spree_version
   s.add_dependency 'spree_core', spree_version
   s.add_dependency 'spree_extension'
