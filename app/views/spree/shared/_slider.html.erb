@@ -17,7 +17,7 @@
       <% slider.each_with_index do |slide, index| %>
         <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
           <% image_url = slide.slide_image ? main_app.url_for(slide.slide_image) : "noimage/large" %>
-          <%= link_to image_tag(image_url, alt: slide.name, style: 'height: auto;'), url_for(slide&.link_url) %>
+          <%= link_to image_tag(image_url, alt: slide.name, class: 'd-block w-100 h-100'), url_for(slide&.link_url) %>
           <div class="carousel-caption">
             <h3><%= slide.name %></h3>
             <% unless slide.body.blank? %>
