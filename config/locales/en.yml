@@ -36,3 +36,7 @@ en:
     new_location: 'New Location'
     editing_location: 'Editing Location'
     back_to_locations: 'Back to Locations'
+
+  spree:
+    slider_locations: 'Slider Locations'
+    slides: 'Slides'

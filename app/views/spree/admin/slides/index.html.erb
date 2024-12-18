@@ -1,33 +1,30 @@
 <% content_for :page_actions do %>
-  <%= button_link_to t('spree_slider.new_slide'), new_object_url, { class: 'btn-success', icon: 'add', id: 'admin_new_slide_link' } %>
+  <%= button_link_to t('spree_slider.new_slide'), new_object_url, { class: 'btn-primary', icon: 'add.svg', id: 'admin_new_slide_link' } %>
 <% end %>
 
 <% content_for :page_title do %>
   <%= t('spree_slider.title') %>
 <% end %>
 
-<% product_slides = @slides.where.not(product_id: nil) %>
-<% image_slides = @slides.where(product_id: nil) %>
-
-<% [
-  [I18n.t("spree_slider.image_slides"), image_slides, :image],
-  [I18n.t("spree_slider.product_slides"), product_slides, :product]
-  ].each do |translation, slides, type|%>
-  <h3><%= translation %></h3>
+<% if @slides.any? %>
   <table class="table sortable" id="listing_slides" data-hook data-sortable-link="<%= update_positions_admin_slides_url %>">
     <thead>
       <tr data-hook="admin_slides_index_headers">
+        <th class="no-border handel-head"></th>
         <th><%= Spree.t(:image) %></th>
-        <th><%= get_column_header_by_type(type) %></th>
+        <th><%= Spree.t(:name) %></th>
         <th><%= Spree.t(:published) %></th>
         <th data-hook="admin_slides_index_header_actions" class="actions"></th>
       </tr>
     </thead>
     <tbody>
-      <% slides.each do |slide| %>
+      <% @slides.each do |slide| %>
         <tr id="<%= spree_dom_id slide %>" data-hook="admin_slides_index_rows">
+          <td class="move-handle text-center">
+            <%= svg_icon name: "grip-vertical.svg", width: '14', height: '14' %>
+          </td>
           <td><%= image_tag slide.slide_image ? main_app.url_for(slide.preview) : "noimage/small.png" %></td>
-          <td><%= get_image_link_by_type(slide, type) %></td>
+          <td><%= slide.name %></td>
           <td><%= slide.published ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_slides_index_row_actions" class="actions text-right">
             <%= link_to_edit slide, no_text: true, class: 'edit' %>
@@ -39,4 +36,9 @@
     </tbody>
   </table>
   <br>
+<% else %>
+  <div class="text-center no-objects-found m-5">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Slide)) %>,
+    <%= link_to Spree.t(:add_one), new_object_url if can?(:create, Spree::Slide) %>!
+  </div>
 <% end %>
