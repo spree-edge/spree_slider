@@ -1,51 +1,44 @@
-<div class="row">
+<div class="row mb-3">
   <div class="col-md-6">
-    <%= f.field_container :name do %>
-      <%= f.label :name, t(:name) %><br>
-      <%= f.text_field :name, class: 'fullwidth form-control' %>
-    <% end %>
+    <%= f.label :name, t(:name) %><br>
+    <%= f.text_field :name, class: 'fullwidth form-control' %>
   </div>
 
   <div class="col-md-6">
-    <%= f.field_container :link_url do %>
-      <%= f.label :link_url, t(:link_url) %><br>
-      <%= f.text_field :link_url, class: 'fullwidth form-control' %>
-    <% end %>
+    <%= f.label :link_url, t(:link_url) %><br>
+    <%= f.text_field :link_url, class: 'fullwidth form-control' %>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <%= f.label :image, t(:image) %><br>
+    <%= f.file_field :image %>
   </div>
 
-  <div class="col-md-6">
-    <%= f.field_container :image do %>
-      <%= f.label :image, t(:image) %><br>
-      <%= f.file_field :image %>
-    <% end %>
-  </div>
-
-  <div class="col-md-6">
-    <div class="field checkbox">
-      <label>
-        <%= f.check_box :published, class: "form-control" %>
-        <%= t(:published) %>
-      </label>
+  <div class="col-md-6 pt-3">
+    <div class="custom-control custom-checkbox">
+      <%= f.check_box :published, class: "custom-control-input" %>
+      <%= f.label :published, class: 'custom-control-label' %>
     </div>
   </div>
+</div>
 
+<div class="row mb-2">
   <div class="col-md-6">
-    <%= f.field_container :slide_location do %>
-      <%= f.label :slide_location_id, Spree.t(:location) %>
-      <%= f.collection_select(:slide_location_ids, Spree::SlideLocation.all, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2', disabled: (cannot? :edit, Spree::SlideLocation) }) %>
-      <%= f.error_message_on :slide_location %>
-    <% end %>
+    <%= f.label :slide_location_id, Spree.t(:location) %>
+    <%= tom_select_tag 'slide[slide_location_ids]', class: 'w-100', options: Spree::SlideLocation.pluck(:id, :name).map{|id, name| {id: id, name: name}}.as_json, active_option: @slide.slide_locations.first.id, value_field: :id %>
+
+    <%= f.error_message_on :slide_location %>
   </div>
 
   <div class="col-md-6">
-    <%= f.field_container :image do %>
-      <% if f.object.image.attached? %>
-        <p>
-          <%= label_tag t(:preview) %>
-          <br>
-          <%= image_tag main_app.url_for(f.object.thumbnail), class: 'img-responsive' %>
-        </p>
-      <% end %>
+    <% if f.object.image.attached? %>
+      <p>
+        <%= label_tag t(:preview) %>
+        <br>
+        <%= image_tag main_app.url_for(f.object.thumbnail), class: 'img-responsive' %>
+      </p>
     <% end %>
   </div>
 </div>
