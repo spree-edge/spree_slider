@@ -27,7 +27,7 @@
 <div class="row mb-2">
   <div class="col-md-6">
     <%= f.label :slide_location_id, Spree.t(:location) %>
-    <%= tom_select_tag 'slide[slide_location_ids]', class: 'w-100', options: Spree::SlideLocation.pluck(:id, :name).map{|id, name| {id: id, name: name}}.as_json, active_option: @slide.slide_locations.first.id, value_field: :id %>
+    <%= tom_select_tag 'slide[slide_location_ids]', class: 'w-100', options: Spree::SlideLocation.pluck(:id, :name).map{|id, name| {id: id, name: name}}.as_json, active_option: @slide.slide_locations.first.try(:id), value_field: :id %>
 
     <%= f.error_message_on :slide_location %>
   </div>
